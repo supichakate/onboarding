@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "src/components/Button.module.css";
+import { CheckButton } from "src/components/CheckButton";
+import { TaskItemProps } from "src/components/TaskItem";
 
 /**
  * An interface defines the shape of an object (what fields are expected to exist and their types):
@@ -32,24 +34,34 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
  * the `<button>`. Thus our `Button` component works mostly like a standard `<button>` element, but
  * with our own styling and restrictions on what can be put inside of it.
  */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { label, kind = "primary", className, ...props },
-  ref,
-) {
-  let buttonClass = styles.button;
-  switch (kind) {
-    case "primary":
-      buttonClass += ` ${styles.primary}`;
-      break;
-    case "secondary":
-      buttonClass += ` ${styles.secondary}`;
-      break;
-  }
-  if (className) {
-    buttonClass += ` ${className}`;
-  }
+
+export function TaskItem({ task }: TaskItemProps) {
+  const containerClass = `${styles.taskItem} ${task.completed ? styles.completed : ""}`;
+
   return (
-    <button ref={ref} className={buttonClass} {...props}>
+    <div className={containerClass}>
+      <CheckButton checked={task.completed} className={styles.checkButton} />
+      <div className={styles.content}>
+        <span className={styles.title}>{task.title}</span>
+        {task.description && (
+          <span className={styles.description}>{task.description}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { label, kind = "primary", ...props },
+  ref
+) {
+  return (
+    <button
+      ref={ref}
+      className={`${styles.button} ${styles[kind]}`}
+      {...props}
+    >
       {label}
     </button>
   );

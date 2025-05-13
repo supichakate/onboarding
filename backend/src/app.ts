@@ -56,3 +56,10 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+
+import tasksRoutes from "src/routes/tasks"; // add this line
+
+// ...
+
+app.use("/api/task", taskRoutes);
+app.use("/api/tasks", tasksRoutes); // add this line

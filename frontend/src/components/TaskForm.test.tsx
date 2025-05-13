@@ -46,6 +46,7 @@ const mockTask: Task = {
   description: "Very important",
   isChecked: false,
   dateCreated: new Date(),
+  completed: false
 };
 
 /**
