@@ -8,6 +8,7 @@ import type { APIResult } from "src/api/requests";
  * file.
  */
 export interface Task {
+  completed: boolean;
   _id: string;
   title: string;
   description?: string;
@@ -29,6 +30,7 @@ interface TaskJSON {
   title: string;
   description?: string;
   isChecked: boolean;
+  completed: boolean;
   dateCreated: string;
 }
 
@@ -45,6 +47,7 @@ function parseTask(task: TaskJSON): Task {
     title: task.title,
     description: task.description,
     isChecked: task.isChecked,
+    completed: task.completed,
     dateCreated: new Date(task.dateCreated),
   };
 }
@@ -90,6 +93,17 @@ export async function getTask(id: string): Promise<APIResult<Task>> {
     const response = await get(`/api/task/${id}`);
     const json = (await response.json()) as TaskJSON;
     return { success: true, data: parseTask(json) };
+  } catch (error) {
+    return handleAPIError(error);
+  }
+}
+
+export async function getAllTasks(): Promise<APIResult<Task[]>> {
+  try {
+    const response = await get("/api/tasks");
+    const json = (await response.json()) as TaskJSON[];
+    const tasks = json.map(parseTask);
+    return { success: true, data: tasks };
   } catch (error) {
     return handleAPIError(error);
   }

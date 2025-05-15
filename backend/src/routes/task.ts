@@ -5,6 +5,8 @@
 import express from "express";
 import * as TaskController from "src/controllers/task";
 import * as TaskValidator from "src/validators/task";
+import { updateTask } from "src/controllers/task";
+
 
 const router = express.Router();
 
@@ -19,5 +21,7 @@ router.get("/:id", TaskController.getTask);
  */
 router.post("/", TaskValidator.createTask, TaskController.createTask);
 router.delete("/:id", TaskController.removeTask);
+router.put("/:id", updateTask, updateTask);
 
 export default router;
+

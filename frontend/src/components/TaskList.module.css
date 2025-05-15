@@ -1,0 +1,21 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.title {
+  font: var(--font-title);
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
+}
+
+.empty {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+}
